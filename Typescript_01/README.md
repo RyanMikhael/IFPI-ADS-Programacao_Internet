@@ -23,3 +23,5 @@
 ## Q 04:
 
 - a) ```enum DiasSemana {Segunda, Terça, Quarta, Quinta, Sexta, Sabado, Domingo};```
+
+- b) Resposta no código: ```DiasSemana.ts```
