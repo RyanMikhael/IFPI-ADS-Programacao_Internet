@@ -16,14 +16,18 @@
 
 ## Q 03:
 
-- a) Resposta no código: ```Estados_a.ts```
+- a) Resposta no código: ```Estados_a.ts``` .
 
-- b) Resposta no código: ```Estados_b.ts``` . Nesse código são imprimidos os indices de cada estado da enum junto da sigla do estado ao lado
+- b) Resposta no código: ```Estados_b.ts``` . Nesse código são imprimidos os indices de cada estado da enum junto da sigla do estado ao lado.
 
 ## Q 04:
 
-- a) ```enum DiasSemana {Segunda, Terça, Quarta, Quinta, Sexta, Sabado, Domingo};```
+- a) ```enum DiasSemana {Segunda, Terça, Quarta, Quinta, Sexta, Sabado, Domingo};``` .
 
-- b) Resposta no código: ```DiasSemana.ts```
+- b) Resposta no código: ```DiasSemana.ts``` .
 
-- c) Resposta no código: ```DiasSemana.ts```
+- c) Resposta no código: ```DiasSemana.ts``` .
+
+
+## Q 05:
+- Resposta no código: ```Exibir.ts``` .
