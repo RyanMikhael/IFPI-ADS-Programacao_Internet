@@ -33,6 +33,7 @@
 - Resposta no código: ```Exibir.ts``` .
 
 ## Q 06:
-- ``` var ola = () => "olá";
-  
-  console.log( ola() ); ```
+- ``` 
+  var ola = () => "olá";
+  console.log( ola() ); 
+  ```
