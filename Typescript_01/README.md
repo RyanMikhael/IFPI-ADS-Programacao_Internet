@@ -7,3 +7,13 @@
 
 - c) Compila, pois a partir da primeira expressão a variavel ```c``` é definida como do tipo ```number```.
 
+## Q 02:
+- a) 3
+
+- b) 12
+
+- c) NaN
+
+## Q 3:
+
+- a) Resposta no código:
