@@ -41,7 +41,8 @@
  ## Q 07:
  - Resposta no código: ```Pares.ts``` .
 
-
+## Q 08:
+- Resposta no código: ```MeuNumero.ts``` .
 
 
 
