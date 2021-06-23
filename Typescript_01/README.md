@@ -44,5 +44,6 @@
 ## Q 08:
 - Resposta no código: ```MeuNumero.ts``` .
 
-
+## Q 09:
+- Resposta no código: ```Transaçao.ts``` .
 
