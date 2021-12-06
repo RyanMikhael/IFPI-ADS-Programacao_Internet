@@ -1,11 +1,15 @@
-interface debitoConta{
-    debitar(valor: number, id: number): void
+class debitoConta{
+    debitar(valor: number, id: number): void{       
+    }
     numeroDeTransaçao: string
-    formatarTransaçao(): string
+    formatarTransaçao(): string {
+        return this.numeroDeTransaçao
+    }
 }
 
 class debitoContaCorrente implements debitoConta{
     debitar(valor, id){
+        // verifica tipo de conta
         // debita da conta corrente
     }
     numeroDeTransaçao: string
@@ -17,6 +21,7 @@ class debitoContaCorrente implements debitoConta{
 
 class debitoContaInvestimento implements debitoConta{
     debitar(valor, id){
+        // verifica tipo de conta
         // debita da conta investimento
     }
     numeroDeTransaçao: string
