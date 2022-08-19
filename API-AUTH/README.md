@@ -4,7 +4,7 @@ API desenvolvida para a disciplina de Programação para internet II com foco no
 ## Tecnologias utilizadas:
 - Javascript
 - Express
-- MongoDB com biblioteca Mongoose
+- MongoDB/Mongoose
 
 ## Referênciass:
 - https://www.npmjs.com/package/bcryptjs
