@@ -1,45 +1,54 @@
 const express = require('express')
-
+const bcrypt = require('bcrypt')
 
 const User = require('../models/user')
 
-const router = express.Router()
+class AuthController{
 
-router.post('/signup', async (req,res) =>{
-    const {email} = req.body
-
-    const userAlreadyExists = await User.findOne({email})
-    try{
-
-        if(!userAlreadyExists){
-            const user = await User.create(req.body)
-        
-            return res.send({user})
+     async signup(req, res){
+        const {email} = req.body
+    
+        const userAlreadyExists = await User.findOne({email})
+        try{
+    
+            if(!userAlreadyExists){
+                const user = await User.create(req.body)
+            
+                return res.send({user})
+            }
+            return res.status(400).json({error: "User already exists"})
         }
-        return res.status(400).json({error: "User already exists"})
+        catch{
+            res.status(400).json({error: 'Registration failed'})
+            
+        }  
     }
-    catch{
-        res.status(400).json({error: 'Registration failed'})
-        
-    }   
 
-})
+    async signin(req,res){
+        const {email,  password} = req.body
+        try{
 
-router.post('/signin', async (req,res) => {
-
-    const {email,  password} = req.body
+            const user = await User.findOne({ email}).select('+password')
+            const verifyPassword = await bcrypt.compare(password, user.password)
+            if(!verifyPassword){
+                res.status(400).json({error: "Incorrect password"})
+            }
+            if(user!= null){
     
-    const user = await User.findOne({ email, password })
-    if(user!= null){
+                return res.send({user})
+            }
+        }
+        catch(error){
 
-        return res.send({user})
+            res.status(400).json({error: "Login failed"})
+        }
     }
-    res.status(400).json({error: "Incorrect email or password"})
-    
-})
 
-router.post('/me', (req, res) =>{
-    res.status(200).json({msg: "Perfil"})
-})
 
-module.exports = app => app.use('/auth', router)
+    async me(req,res){
+        res.status(200).json({msg: "Perfil"})
+    }
+}
+
+
+module.exports = AuthController
