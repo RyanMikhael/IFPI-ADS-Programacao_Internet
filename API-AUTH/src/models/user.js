@@ -19,11 +19,12 @@ const userSchema = new Schema({
     }
 })
 
-userSchema.pre('save', async function(){
+userSchema.pre('save', async function(next){
     const saltRounds = 10
-    const salt = bcrypt.genSaltSync(saltRounds)
-    const hash = bcrypt.hashSync(this.password, salt)
+    const hash = await bcrypt.hash(this.password, saltRounds)
     this.password = hash
+
+    next()
 })
 
 const User = mongoose.model('User', userSchema)
