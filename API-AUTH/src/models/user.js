@@ -16,10 +16,13 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
+    },
+    refreshToken: {
+        type: String,
     }
 })
 
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function( next){
     const saltRounds = 10
     const hash = await bcrypt.hash(this.password, saltRounds)
     this.password = hash

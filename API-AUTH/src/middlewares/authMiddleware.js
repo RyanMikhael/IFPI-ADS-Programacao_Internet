@@ -6,22 +6,24 @@ module.exports = (req,res, next) => {
 
         const auth = req.headers.authorization
         if(!auth){
-            res.status(401).json({error: "Invalid credentials"})
+            return res.status(401).json({error: "Invalid credentials"})
         }
         const bearer = auth.split(' ')[0]
         const token = auth.split(' ')[1]
         
         if(!bearer === 'Bearer'){
-            res.status(401).json({error: "Token invalid"})
+            return res.status(401).json({error: "Token invalid"})
         }
 
         const decoded = jwt.verify(token, secretConfig.key_secret)
 
-        req.user = decoded
+        req.user = decoded.id
+        console.log(req.user)
         next()
     }
+    
     catch(error){
-        res.status(401).json({error: "Authenticate failed"})
+        return res.status(401).json({error: "Authenticate failed"})
     }
 
 }

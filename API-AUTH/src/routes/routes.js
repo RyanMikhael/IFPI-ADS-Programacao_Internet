@@ -7,7 +7,7 @@ const userSignup = require('../middlewares/signupMiddleware')
 
 route.post('/signup',userSignup, authController.signup)
 route.post('/signin', authController.signin)
-route.post('/me', authController.me)
+route.post('/refresh', authController.refresh)
 route.get('/', (req, res) => {
     res.send('ok')
 })
