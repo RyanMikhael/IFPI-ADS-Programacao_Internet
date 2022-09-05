@@ -1,7 +1,6 @@
-const { model } = require('mongoose')
 const mongoose = require('../database/mongoose')
-const {Schema} = mongoose
 const bcrypt = require('bcrypt')
+const {Schema} = mongoose
 
 const userSchema = new Schema({
     
@@ -19,7 +18,8 @@ const userSchema = new Schema({
         require: true
     },
     phone: {
-        type: String
+        type: String,
+        default: null
     },
     activePhone: {
         type: Boolean,

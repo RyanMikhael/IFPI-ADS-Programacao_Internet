@@ -7,6 +7,8 @@ const activeAccount = require('../middlewares/contaAtivaMiddleware')
 
 const phoneController = new PhoneController()
 
+
+phoneRoute.post('/addPhone', phoneController.addPhone)
 phoneRoute.get('/generateCode', phoneController.codePhone)
 phoneRoute.post('/activePhone', phoneExists, activeAccount, phoneController.activePhone )
 

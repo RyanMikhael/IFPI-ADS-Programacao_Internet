@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const key = require('../config/auth.json')
+const bcrypt = require('bcrypt')
 
 /*
     Quando o usuário fizer cadastro, deve ser gerado um codigo de 5 digitos numéricos para
@@ -10,17 +11,17 @@ const key = require('../config/auth.json')
 
 class AuthController{
 
+    // cadastro do usuario
     async signup(req, res){
         try{
             
-            const {email, password, name, phone } = req.body
+            const {email, password, name } = req.body
             
             const newUser = await User.create(req.body)
                
             const min = Math.ceil(9999)
             const max = Math.floor(100000)
             const codigoEmail = Math.floor(Math.random() * (max - min) + min )
-            console.log("SMS: OK")
             console.log("Código de ativação de conta via email: ", codigoEmail)
 
             return res.send({newUser})
@@ -33,6 +34,7 @@ class AuthController{
         }
     }
 
+    // Ativação de conta via email
     async activeEmailAccount(req,res){
         try{
 
@@ -55,7 +57,7 @@ class AuthController{
         
     }
 
-
+    // Login com email
     async signinEmail(req,res){
         try{
 
@@ -84,12 +86,17 @@ class AuthController{
             
     }
 
-
+    // Login com numero do telefone
     async signinPhone(req,res){
 
         try{
 
             const {phone,  code} = req.body
+
+            if(!(code > 9999 && code << 100000)){
+                return res.status(400).json({error: "invalid code"})
+            }
+
             const user =  await User.findOne({ phone })
 
             const acessToken = jwt.sign({ id: user.id}, key.acess_key, {
@@ -114,15 +121,14 @@ class AuthController{
 
     }
 
-
+    // rota para gerar codigo para realizar login com telefone
     async sendCode(req,res) {
         try{
 
             const min = Math.ceil(9999)
             const max = Math.floor(100000)
             const codePhone = Math.floor(Math.random() * (max - min) + min )
-            console.log("SMS: OK")
-            console.log("Código de ativação de telefone: ", codePhone)
+            console.log("Código de login com telefone: ", codePhone)
             return res.status(200).json({msg: "code generate"})
         }
         
