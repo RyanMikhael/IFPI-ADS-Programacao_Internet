@@ -19,7 +19,9 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
-        default: null
+        unique: true,
+        sparse: true
+        
     },
     activePhone: {
         type: Boolean,
@@ -31,8 +33,16 @@ const userSchema = new Schema({
     },
     refreshToken: {
         type: String
+    },
+    code: {
+        type: Number,
+    },
+    generationCode: {
+        type: Date
     }
 })
+
+
 
 userSchema.pre('save', async function( next){
     const salt = 10

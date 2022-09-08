@@ -1,29 +1,26 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const key = require('../config/auth.json')
-const bcrypt = require('bcrypt')
+const code = require('../resources/generateCode')
 
-/*
-    Quando o usuário fizer cadastro, deve ser gerado um codigo de 5 digitos numéricos para
-    validar a ativação da conta, esse código deve ter validade de 2 horas, esse código deve ser
-    devolvido no console
-*/
 
 class AuthController{
 
-    // cadastro do usuario
     async signup(req, res){
         try{
             
             const {email, password, name } = req.body
             
             const newUser = await User.create(req.body)
-               
-            const min = Math.ceil(9999)
-            const max = Math.floor(100000)
-            const codigoEmail = Math.floor(Math.random() * (max - min) + min )
-            console.log("Código de ativação de conta via email: ", codigoEmail)
 
+            const codeEmail = await code() 
+            newUser.code = codeEmail
+            newUser.generationCode = Date.now()
+            newUser.save()
+
+            
+            console.log("Código de ativação de conta via email: ", codeEmail)
+            
             return res.send({newUser})
 
         }
@@ -39,11 +36,20 @@ class AuthController{
         try{
 
             const {email, code} = req.body
-            if(!(code > 9999 && code << 100000)){
+            
+            const user = await User.findOne({email})
+            
+            const generatedAt = user.generationCode.getTime()
+            const currentTime = Date.now()
+            
+            if (code !== user.code){
                 return res.status(400).json({error: "invalid code"})
             }
-            const user = await User.findOne({email})
-    
+            
+            if(currentTime - generatedAt > 7200000){
+                return res.status(400).json({error : "Expired code"})
+            }
+
             user.activeAccount = true
             user.save()
             
@@ -74,6 +80,7 @@ class AuthController{
 
             user.refreshToken = refreshToken
             user.password = undefined
+            
 
             return res.send({user, acessToken })
 
@@ -93,11 +100,18 @@ class AuthController{
 
             const {phone,  code} = req.body
 
-            if(!(code > 9999 && code << 100000)){
+            const user =  await User.findOne({ phone })
+
+            const generatedAt = user.generationCode.getTime()
+            const currentTime = Date.now()
+            
+            if (code !== user.code){
                 return res.status(400).json({error: "invalid code"})
             }
-
-            const user =  await User.findOne({ phone })
+            
+            if(currentTime - generatedAt > 7200000){
+                return res.status(400).json({error : "Expired code"})
+            }
 
             const acessToken = jwt.sign({ id: user.id}, key.acess_key, {
                 expiresIn: "1d"
@@ -109,6 +123,8 @@ class AuthController{
 
             user.refreshToken = refreshToken
             user.password = undefined
+            user.code = undefined
+            
 
             return res.send({user, acessToken })
 

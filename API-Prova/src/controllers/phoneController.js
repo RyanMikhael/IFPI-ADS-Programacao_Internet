@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const generateCode = require('../resources/generateCode')
 
 
 class PhoneController{
@@ -10,14 +11,17 @@ class PhoneController{
     
             const user = await User.findOne({email})
 
-            if(user.phone !== null){
-                return res.status(400).json({error: "A phone has already been added"})
+            const phoneAlreadyExists = await User.findOne({phone})
+            if(phoneAlreadyExists){
+                return res.status(400).json({error: "phone already exists"})
             }
+            
 
             user.phone = phone
             user.save()
-
+    
             return res.send({phone})
+
         }
 
         catch(error){
@@ -29,25 +33,44 @@ class PhoneController{
     async codePhone(req,res){
         try{
 
-            const min = Math.ceil(9999)
-            const max = Math.floor(100000)
-            const codeActivationPhone = Math.floor(Math.random() * (max - min) + min )
+            const {phone} = req.body
+            const codeActivationPhone = await generateCode()
+            
+            const user = await User.findOne({phone})
+            user.code = codeActivationPhone
+            user.generationCode = Date.now()
+            user.save()
+            
+            
             console.log("Código de ativação de telefone: ", codeActivationPhone)
             return res.status(200).json({msg: "code generate"})
         }
+        
         catch(error){
+            console.log(error)
             return res.status(400).json({error: "code not generated"})
         }
     }
 
     // Ativar telefone
     async activePhone(req,res) {
+
         try{
+
             const {phone, code} = req.body
-            if(!(code > 9999 && code << 100000)){
+            
+            const user = await User.findOne({phone})
+
+            const generatedAt = user.generationCode.getTime()
+            const currentTime = Date.now()
+            
+            if (code !== user.code){
                 return res.status(400).json({error: "invalid code"})
             }
-            const user = await User.findOne({phone})
+            
+            if(currentTime - generatedAt > 7200000){
+                return res.status(400).json({error : "Expired code"})
+            }
 
             user.activePhone = true
             user.save()
@@ -56,6 +79,7 @@ class PhoneController{
             
         }
         catch(error){
+            console.log(error)
             return res.status(400).json({error: "failed to activate phone"})
         }
     }
