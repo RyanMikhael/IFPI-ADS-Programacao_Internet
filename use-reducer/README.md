@@ -1,1 +1,1 @@
-### Utilização do useReducerem aplicação apresentada em sala de aula.
+### Utilização do useReducer em aplicação apresentada em sala de aula.
