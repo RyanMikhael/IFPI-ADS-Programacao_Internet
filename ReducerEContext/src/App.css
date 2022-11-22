@@ -1,0 +1,135 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+.App{
+  margin: 30px auto 60px;
+  width: 500px;
+  min-height: 100vh;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px 3px #3485FF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.App h1{
+  
+  margin: 12px auto;
+}
+
+.App h3{
+  margin-bottom: 20px;
+}
+
+.App form{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
+  
+}
+
+.App form #input{
+  width: 60%;
+  padding: 8px;
+  border: 1px solid #3485FF;
+  color: #0D114F;
+  
+  
+}
+
+.App form #input::placeholder{
+  color: #0D114F;
+}
+
+
+.App form #button{
+  width: 120px;
+  padding: 4px;
+  margin-left: 6px;
+  
+}
+
+.App ul{
+  /* display: flex; */
+  width: 90%;
+  /* flex-direction: column; */
+  margin-top: 28px;
+  word-break: break-word;
+}
+
+.App ul li{
+  display: grid;
+  grid-template-columns: 10% 60% 15% 15%;
+  grid-template-areas: 
+  "checkbox text button-1 button-2";
+  margin-bottom: 8px;
+}
+
+.App ul li:nth-child(0){
+  grid-area: checkbox;
+  
+}
+
+.App ul li:nth-child(1){
+  grid-area: text;
+}
+.App ul li:nth-child(2){
+  grid-area: button-1;
+  
+}
+.App ul li:nth-child(3){
+  grid-area: button-2;
+}
+
+
+.App ul li #checkbox{
+  margin-right: 8px;
+  
+}
+
+.App ul li button{
+  width: 100%;
+  height: 20px;
+}
